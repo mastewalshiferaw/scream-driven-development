@@ -2,6 +2,12 @@ let ctx = null;
 let noiseBuf = null;
 let staticNode = null;
 
+// Static bed volume. Lower this to make the static quieter, or set to 0 to mute.
+export const STATIC_VOLUME = 0.01;
+
+// Intensity below this level keeps the static silent.
+const STATIC_GATE = 0.3;
+
 function getCtx() {
   if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
   if (ctx.state === 'suspended') ctx.resume();
@@ -48,7 +54,7 @@ export function playThudClack() {
   src.stop(t + 0.05);
 }
 
-/** Looping static bed for screaming. Gain is driven by intensity. */
+/** Looping static bed for screaming. Starts silent; gain is driven by setStaticLevel. */
 export function startStatic() {
   if (staticNode) return;
   const c = getCtx();
@@ -65,13 +71,19 @@ export function startStatic() {
   staticNode = { src, g };
 }
 
-/** Call every frame. Small random flutter gives a glitchy feel. */
+/** Call every frame. Static stays silent below the gate and flutters above it. */
 export function setStaticLevel(level) {
   if (!staticNode) return;
+  const gated = level > STATIC_GATE ? level : 0;
   const flutter = 0.7 + Math.random() * 0.3;
-  staticNode.g.gain.setTargetAtTime(level * 0.35 * flutter, getCtx().currentTime, 0.03);
+  staticNode.g.gain.setTargetAtTime(
+    gated * STATIC_VOLUME * flutter,
+    getCtx().currentTime,
+    0.03
+  );
 }
 
+/** Fades the static out and stops it. Safe to call when nothing is playing. */
 export function stopStatic() {
   if (!staticNode) return;
   const c = getCtx();
