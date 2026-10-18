@@ -87,7 +87,7 @@ export default function App() {
     setPhase('blocked');
     push('Rage aborted. Pipeline remains blocked.', 'error');
   };
-  const progress = phase === 'booting' ? bootProgress : session.progress ?? 50;
+  const progress = phase === 'booting' ? bootProgress : session.progress ?? 87;
 
   return (
     <ShakeWrapper intensityRef={session.intensityRef}>

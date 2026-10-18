@@ -6,7 +6,7 @@ import { playThudClack, startStatic, setStaticLevel, stopStatic } from '../servi
 
 const PUBLISH_MS = 50;
 const INITIAL = {
-  progress: 50,
+  progress: 87,
   done: false,
   stats: null,
   live: { db: -Infinity, kps: 0 },

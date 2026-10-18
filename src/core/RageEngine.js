@@ -1,4 +1,4 @@
-export const PIPELINE_START = 50;
+export const PIPELINE_START = 87;
 export const PIPELINE_TARGET = 100;
 
 const SCREAM_GAIN = 5;      // % gained per second at full intensity

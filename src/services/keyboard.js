@@ -1,5 +1,5 @@
 const WINDOW_MS = 1000;
-const KPS_FULL = 25; // keystrokes/sec that count as max intensity
+const KPS_FULL = 20; // keystrokes/sec that count as max intensity
 
 export class KeystrokeMonitor {
   constructor({ onKey } = {}) {
